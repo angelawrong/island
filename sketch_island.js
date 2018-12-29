@@ -91,7 +91,11 @@ function draw() {
 	
 	var passedTimeY = pressedY+(millis()-pressedTime);
 	var mouseColor = color((millis()/10)%360, 80, 100, 1);
-	var mousePressedColor = color((pressedTime/10)%360, 80, 100, 1);
+	var mousePressedColor = color(60, 60, random(80,100), 1);
+	
+	if (pressedTime > 0) {
+	mousePressedColor = color((pressedTime/10)%360, 80, 100, 1);
+	}
 	
 	fill(mouseColor);
 	
@@ -101,10 +105,10 @@ function draw() {
 	
 	fill(mousePressedColor);
 	
-	if (passedTimeY <685){
+	if (pressedTime > 0 && passedTimeY<685){
 		dropY = passedTimeY;
 		ellipse(pressedX, dropY, 12-dropY/685*2);
-	} else {
+	} else if (pressedTime > 0){
 		ellipse(random(1)+((millis()-pressedTime)/36+pressedX-(24-pressedY/685*24))%1080, 685+random(1), 12-dropY/685*2);
 	}
 	
@@ -150,9 +154,13 @@ function draw() {
 }
 
 function mouseReleased() {
+	if (mouseX <= 1080 && mouseY <= 1080){
 	
     pressedX = mouseX;
 	pressedY = mouseY;
 	pressedTime = millis();
+	
+	}
 
 }
+
